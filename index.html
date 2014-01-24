@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>CSS Regions - Sample Use</title>
+  
+  <style>
+  
+  
+  
+  </style>
 </head>
 <body>
   <article>
@@ -91,15 +97,23 @@
   going to be fined again!</p>
 
   </article>
+  
+  <div id="template">
+    <div class="title"></div>
+    <div class="lead"></div>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="quote"></div>
+    <div class="box3"></div>
+  </div>
+  
   </body>
   <script>
-  
-  // lightweight detection of CSS Regions
-  document.addEventListener('DOMContentLoaded', function(){
-    if ('flow-into' in document.body.style){
-      document.documentElement.classList.add('regions')
-    }
-  })
-  
+    // lightweight detection of CSS Regions
+    var hasRegions = ['-webkit-', '-ms-', '-moz-', ''].some(function(prefix) {
+        return (prefix + 'flow-into' in document.body.style)
+    })
+    
+    document.documentElement.classList.add( hasRegions ? 'regions' : 'no-regions' )
   </script>
 </html>
