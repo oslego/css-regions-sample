@@ -6,13 +6,100 @@
   
   <style>
   
+  * {
+    box-sizing: border-box;
+  }
   
+  article{
+    font-size: 1.1rem;
+    line-height: 1.4em;
+  }
+  
+  h1{
+    text-align: center;
+  }
+  
+  html:not(.regions) #template{
+    display: none;
+  }
+  
+  @media screen and (min-width: 35rem){
+    article{
+      font-size: 1.4rem;
+    }
+    
+    html:not(.regions) article{
+      max-width: 50rem;
+      margin: 0 auto;
+    }
+    
+    .regions article{
+      -webkit-flow-into: content;
+    }
+
+    .regions h1 {
+      -webkit-region-break-after: always;
+      -webkit-region-break-inside: avoid;
+    }
+
+    .regions aside,
+    .regions p:first-of-type{
+      -webkit-region-break-inside: avoid;
+      background: lightgray;
+      margin: 0;
+      padding: 1.4rem;
+    }
+
+    .regions h2{
+      display: block;
+      -webkit-region-break-inside: avoid;
+    }
+    
+    .regions h2 + p{
+      -webkit-region-break-before: avoid;
+    }
+    
+    #template {
+      max-width: 65rem;
+      margin: 0 auto;
+    }
+    
+    #template .page{
+      height: 100vh;
+      padding: 0 0 6rem;
+    }
+    
+    #template .title,
+    #template .column{
+      -webkit-flow-from: content;
+    }
+    
+    #template .column{
+      width: 47.5%;
+      float: left;
+      height: 100%;
+    }
+    
+    #template .column + .column{
+      margin-left: 5%;
+    }
+    
+    #template .page-all{
+      height: auto;
+    }
+    #template .column-all{
+      height: auto;
+      float: none;
+      width: 100%;
+    }
+  }
   
   </style>
 </head>
 <body>
+  
   <article>
-  <h1>Sample CSS Regions Layout</h1>
+  <h1>Finnegans Wake</h1>
 
   <p>Riverrun, past Eve and Adam's, from swerve
   of shore to bend of bay, brings us by a commodius vicus of
@@ -99,12 +186,24 @@
   </article>
   
   <div id="template">
+    
     <div class="title"></div>
-    <div class="lead"></div>
-    <div class="box1"></div>
-    <div class="box2"></div>
-    <div class="quote"></div>
-    <div class="box3"></div>
+    
+    <div class="page">
+      <div class="column"></div>
+      <div class="column"></div>
+    </div>
+    
+    <div class="page">
+      <div class="column"></div>
+      <div class="column"></div>
+    </div>
+    
+    <!-- Catch overset content and keep it visible when JS is off.-->
+    <div class="page page-all">
+      <div class="column column-all"></div>
+    </div>
+    
   </div>
   
   </body>
@@ -114,6 +213,7 @@
         return (prefix + 'flow-into' in document.body.style)
     })
     
-    document.documentElement.classList.add( hasRegions ? 'regions' : 'no-regions' )
+    document.documentElement.classList.add( hasRegions ? 'regions' : 'no-regions' );
+    
   </script>
 </html>
